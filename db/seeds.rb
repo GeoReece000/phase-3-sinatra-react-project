@@ -1,8 +1,5 @@
 require 'faker'
 
-# Set the Faker locale to English
-Faker::Config.locale = 'en'
-
 puts "🌱 Seeding spices..."
 
 Article.destroy_all
@@ -11,8 +8,6 @@ Category.destroy_all
 
 # Set the Faker locale to English
 Faker::Config.locale = 'en'
-
-# Seed your database here
 
 # Generate fake authors
 10.times do
@@ -31,13 +26,16 @@ end
 
 # Generate fake articles
 30.times do
+  author = Author.all.sample
+  category = Category.all.sample
+
   Article.create(
-    author_name: Faker::Name.name,
+    author_name: author.author_name,
     views: Faker::Number.between(from: 0, to: 1000),
-    author_id: Author.pluck(:id).sample,
-    category_id: Category.pluck(:id).sample,
-    # created_at: Faker::Time.between(from: 1.year.ago, to: Time.zone.now),
-    # updated_at: Faker::Time.between(from: 1.year.ago, to: Time.zone.now),
+    author_id: author.id,
+    category_id: category.id,
+    # created_at: Faker::Time.between(from: 1.year.ago, to: Time.zone),
+    # updated_at: Faker::Time.between(from: 1.year.ago, to: Time.zone),
     comments: Faker::Lorem.paragraph,
     article: Faker::Lorem.paragraphs(number: 3).join("\n\n")
   )
