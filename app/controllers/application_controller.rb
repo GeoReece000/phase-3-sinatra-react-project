@@ -1,42 +1,59 @@
 class ApplicationController < Sinatra::Base
   set :default_content_type, 'application/json'
 
-
-  # Add your routes here
   get '/articles' do
-    article=Article.all
-   article.to_json
+    articles = Article.all
+    articles.to_json
   end
 
   get '/authors' do
-    author=Author.all
-    author.to_json
-
+    authors = Author.all
+    authors.to_json
   end
 
-  get '/category' do
-    category=Category.all
-    category.to_json
+  get '/categories' do
+    categories = Category.all
+    categories.to_json
   end
 
   post '/articles' do
-      # Assuming you have an Article model defined
-    @article = Article.new(params)
+    article = Article.new(params[:article])
 
-    if @article.save
-      # Article saved successfully
-      @article.to_json
+    if article.save
+      article.to_json
     else
-      # There was an error saving the article
-      { error: 'Unable to create article' }
+      status 422
+      { error: 'Unable to create article' }.to_json
+    end
+  end
+
+  post '/authors' do
+    author = Author.new(params[:author])
+
+    if author.save
+      author.to_json
+    else
+      status 422
+      { error: 'Unable to create author' }.to_json
+    end
+  end
+
+  post '/categories' do
+    category = Category.new(params[:category])
+
+    if category.save
+      category.to_json
+    else
+      status 422
+      { error: 'Unable to create category' }.to_json
     end
   end
 
   get '/articles/:id' do |id|
-    @article = Article.find(id)
+    article = Article.find(id)
 
-    if @article
-      @article.to_json
+    if article
+      article.to_json
     else
       status 404
       { error: 'Article not found' }.to_json
@@ -44,11 +61,11 @@ class ApplicationController < Sinatra::Base
   end
 
   patch '/articles/:id' do |id|
-    @article = Article.find(id)
+    article = Article.find(id)
 
-    if @article
-      if @article.update(params)
-        @article.to_json
+    if article
+      if article.update(params[:article])
+        article.to_json
       else
         { error: 'Unable to update article' }.to_json
       end
@@ -59,10 +76,10 @@ class ApplicationController < Sinatra::Base
   end
 
   delete '/articles/:id' do |id|
-    @article = Article.find(id)
+    article = Article.find(id)
 
-    if @article
-      @article.destroy
+    if article
+      article.destroy
       { message: 'Article deleted' }.to_json
     else
       status 404

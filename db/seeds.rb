@@ -1,78 +1,46 @@
 require 'faker'
 
+# Set the Faker locale to English
+Faker::Config.locale = 'en'
+
 puts "🌱 Seeding spices..."
 
 Article.destroy_all
 Author.destroy_all
 Category.destroy_all
+
+# Set the Faker locale to English
+Faker::Config.locale = 'en'
 
 # Seed your database here
 
-# Generate fake data for authors
+# Generate fake authors
 10.times do
-  author_name = Faker::Name.name
-  writing_category = Faker::Book.genre
-
-  Author.create(author_name: author_name, writing_category: writing_category)
-end
-
-# Generate fake data for categories
-5.times do
-  category_name = Faker::Book.genre
-
-  Category.create(category_name: category_name)
-end
-
-# Generate fake data for articles
-require 'faker'
-
-puts "🌱 Seeding spices..."
-
-Article.destroy_all
-Author.destroy_all
-Category.destroy_all
-
-# Generate fake data for authors
-10.times do
-  author_name = Faker::Name.name
-  writing_category = Faker::Book.genre
-
-  Author.create(author_name: author_name, writing_category: writing_category)
-end
-
-# Generate fake data for categories
-5.times do
-  category_name = Faker::Book.genre
-
-  Category.create(category_name: category_name)
-end
-
-# Generate fake data for articles
-50.times do
-  author = Author.order("RANDOM()").first
-  category = Category.order("RANDOM()").first
-  author_id = author.id
-  author_name = author.author_name
-  writing_category = author.writing_category
-  category_name = category.category_name
-  views = rand(100..1000)
-  comments_count = rand(0..10)
-
-  article = Article.create(
-    author_name: author_name,
-    category_id: category.id,
-    views: views,
-    author_id: author_id
+  Author.create(
+    author_name: Faker::Name.name,
+    writing_category: Faker::Book.genre
   )
+end
 
-  # Generate fake data for comments on each article
-  comments_count.times do
-    comment = Faker::Lorem.paragraph
+# Generate fake categories
+5.times do
+  Category.create(
+    category_name: Faker::Book.genre
+  )
+end
 
-    # Comment.create(comments: comment, article_id: article.id)
-  end
+# Generate fake articles
+30.times do
+  Article.create(
+    author_name: Faker::Name.name,
+    views: Faker::Number.between(from: 0, to: 1000),
+    author_id: Author.pluck(:id).sample,
+    category_id: Category.pluck(:id).sample,
+    # created_at: Faker::Time.between(from: 1.year.ago, to: Time.zone.now),
+    # updated_at: Faker::Time.between(from: 1.year.ago, to: Time.zone.now),
+    comments: Faker::Lorem.paragraph,
+    article: Faker::Lorem.paragraphs(number: 3).join("\n\n")
+  )
 end
 
 puts "✅ Done seeding!"
-
-
