@@ -16,3 +16,10 @@ Category.destroy_all
     writing_category: Faker::Book.genre
   )
 end
+
+# Generate fake categories
+5.times do
+  Category.create(
+    category_name: Faker::Book.genre
+  )
+end
