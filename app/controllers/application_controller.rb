@@ -46,3 +46,15 @@ class ApplicationController < Sinatra::Base
       { error: 'Article not found' }.to_json
     end
   end
+
+  delete '/articles/:id' do |id|
+    article = find_article(id)
+
+    if article
+      article.destroy
+      { message: 'Article deleted' }.to_json
+    else
+      status 404
+      { error: 'Article not found' }.to_json
+    end
+  end
