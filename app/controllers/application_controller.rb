@@ -116,3 +116,16 @@ class ApplicationController < Sinatra::Base
       { error: 'Category not found' }.to_json
     end
   end
+
+  # Delete a category
+  delete '/categories/:id' do |id|
+    category = Category.find_by(id: id)
+
+    if category
+      category.destroy
+      { message: 'Category deleted' }.to_json
+    else
+      status 404
+      { error: 'Category not found' }.to_json
+    end
+  end
