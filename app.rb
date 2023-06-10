@@ -1,6 +1,8 @@
 require 'sinatra'
 require 'json'
 require_relative 'controllers/article_controller'
+require_relative 'controllers/categories_controller'
+
 
 # Set the desired port
 set :port, 9292
