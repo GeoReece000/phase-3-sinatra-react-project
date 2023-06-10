@@ -74,3 +74,15 @@ class ApplicationController < Sinatra::Base
       categories = Category.all
       categories.to_json
     end
+
+  # Get a specific category
+  get '/categories/:id' do |id|
+    category = Category.find_by(id: id)
+
+    if category
+      category.to_json
+    else
+      status 404
+      { error: 'Category not found' }.to_json
+    end
+  end
