@@ -86,3 +86,16 @@ class ApplicationController < Sinatra::Base
       { error: 'Category not found' }.to_json
     end
   end
+
+  # Create a category
+  post '/categories' do
+    category = Category.new(category_params)
+
+    if category.save
+      status 201
+      category.to_json
+    else
+      status 422
+      { error: 'Unable to create category' }.to_json
+    end
+  end
