@@ -58,3 +58,14 @@ class ApplicationController < Sinatra::Base
       { error: 'Article not found' }.to_json
     end
   end
+
+  private
+
+  def article_params
+    params[:article].slice(:title, :content, :category_id)
+  end
+
+  def find_article(id)
+    Article.find_by(id: id)
+  end
+  
