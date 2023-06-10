@@ -99,3 +99,20 @@ class ApplicationController < Sinatra::Base
       { error: 'Unable to create category' }.to_json
     end
   end
+
+  # Update a category
+  patch '/categories/:id' do |id|
+    category = Category.find_by(id: id)
+
+    if category
+      if category.update(category_params)
+        category.to_json
+      else
+        status 422
+        { error: 'Unable to update category' }.to_json
+      end
+    else
+      status 404
+      { error: 'Category not found' }.to_json
+    end
+  end
