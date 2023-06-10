@@ -19,3 +19,15 @@ class ApplicationController < Sinatra::Base
       { error: 'Unable to create article' }.to_json
     end
   end
+
+  get '/articles/:id' do |id|
+    article = find_article(id)
+
+    if article
+      article.to_json
+    else
+      status 404
+      { error: 'Article not found' }.to_json
+    end
+  end
+
