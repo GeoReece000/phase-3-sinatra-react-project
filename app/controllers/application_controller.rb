@@ -31,3 +31,18 @@ class ApplicationController < Sinatra::Base
     end
   end
 
+  patch '/articles/:id' do |id|
+    article = find_article(id)
+
+    if article
+      if article.update(article_params)
+        article.to_json
+      else
+        status 422
+        { error: 'Unable to update article' }.to_json
+      end
+    else
+      status 404
+      { error: 'Article not found' }.to_json
+    end
+  end
