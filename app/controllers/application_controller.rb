@@ -129,3 +129,12 @@ class ApplicationController < Sinatra::Base
       { error: 'Category not found' }.to_json
     end
   end
+
+
+  private
+
+  def category_params
+    params[:category].slice(:name)
+  end
+
+end
