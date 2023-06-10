@@ -68,4 +68,9 @@ class ApplicationController < Sinatra::Base
   def find_article(id)
     Article.find_by(id: id)
   end
-  
+
+    # Get all categories
+    get '/categories' do
+      categories = Category.all
+      categories.to_json
+    end
