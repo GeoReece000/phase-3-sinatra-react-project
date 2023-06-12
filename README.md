@@ -1,138 +1,57 @@
-# Phase 3 Project Guidelines
+Link to frontend: https://github.com/GeoReece000/article-news/tree/master
+Link to backend: https://github.com/GeoReece000/phase-3-sinatra-react-project
 
-## Learning Goals
+Backend README
+Introduction
+The backend of the Article List app is built with Sinatra, utilizing Active Record to interact with a database. This README provides instructions on setting up and running the backend server, as well as important information about the API endpoints and functionality.
 
-- Build a web basic API with Sinatra and Active Record to support a React
-  frontend
+Setup
+Clone the backend repository to your local machine.
 
-## Introduction
+Install the required gems by running the following command:
 
-Congrats on getting through all the material for Phase 3! Now's the time to put
-it all together and build something from scratch to reinforce what you know and
-expand your horizons.
+console
+Copy code
+$ bundle install
+Set up the database by running the migrations:
 
-The focus of this project is **building a Sinatra API backend** that uses
-**Active Record** to access and persist data in a database, which will be used
-by a separate **React frontend** that interacts with the database via the API.
+console
+Copy code
+$ bundle exec rake db:migrate
+Start the backend server with the following command:
 
-## Requirements
-
-For this project, you must:
-
-- Use Active Record to interact with a database.
-- Have at least two models with a one-to-many relationship.
-- At a minimum, set up the following API routes in Sinatra:
-  - create and read actions for both models
-  - full CRUD capability for one of the models: 
-  The update action should be implemented using a form that is 
-  pre-filled with existing values for the object. On submission of 
-  the form, the object should update. Note: Using a like button or 
-  similar will not meet the update requirement.
-- Build a separate React frontend application that interacts with the API to
-  perform CRUD actions.
-- Implement proper front end state management. You should be updating state using a
-  setState function after receiving your response from a POST, PATCH, or DELETE 
-  request. You should NOT be relying on a GET request to update state. 
-- Use good OO design patterns. You should have separate classes for each of your
-  models, and create instance and class methods as necessary. 
-- Routes in your application (both client side and back end) should follow RESTful
-  conventions.
-- Use your back end optimally. Pass JSON for related associations to the front 
-  end from the back end. You should use active record methods in your controller to grab
-  the needed data from your database and provide as JSON to the front end. You
-  should NOT be relying on filtering front end state or a separate fetch request to
-  retrieve related data.
-
-For example, build a todo list application with a React frontend interface and a
-Sinatra backend API, where a user can:
-
-- **Create** a new todo
-- **Read** a list of all todos
-- **Update** an individual todo
-- **Delete** a todo
-
-A `Todo` can be tagged with a `Category`, so that each todo _belongs to_ a
-category and each category _has many_ todos.
-
-## Getting Started
-
-### Backend Setup
-
-This repository has all the starter code needed to get a Sinatra backend up and
-running. [**Fork and clone**][fork link] this repository to get started. Then, run
-`bundle install` to install the gems.
-
-**Important**: Be sure you fork a copy of the repo into your GitHub account
-before cloning it. You can do this by using the link above or by clicking the
-"Octocat" button at the top of this page, then clicking "Fork" in the upper
-right corner of the repo page.
-
-[fork link]: https://github.com/learn-co-curriculum/phase-3-sinatra-react-project/fork
-
-The `app/controllers/application_controller.rb` file has an example GET route
-handler. Replace this route with routes for your project.
-
-You can start your server with:
-
-```console
+console
+Copy code
 $ bundle exec rake server
-```
+The server will run on http://localhost:9292.
 
-This will run your server on port
-[http://localhost:9292](http://localhost:9292).
+API Endpoints
+The backend provides the following API endpoints:
 
-### Frontend Setup
+GET /articles: Retrieves a list of all articles.
 
-Your backend and your frontend should be in **two different repositories**.
+POST /articles: Creates a new article.
 
-Create a new repository in a **separate folder** with a React app for your
-frontend. To do this, `cd` out of the backend project directory, and use
-[create-react-app][] to generate the necessary code for your React frontend:
+GET /articles/:id: Retrieves a specific article.
 
-```console
-$ npx create-react-app my-app-frontend
-```
+PATCH /articles/:id: Updates an existing article.
 
-After creating the project locally, you should also
-[create a repository on GitHub][create repo] to host your repo and help
-collaborate, if you're working with a partner.
+DELETE /articles/:id: Deletes an article.
 
-### Fetch Example
+Customization
+To customize the backend to work with your specific frontend implementation:
 
-Your React app should make fetch requests to your Sinatra backend! Here's an
-example:
+Modify the API endpoints and behavior in the respective route handlers in the app/controllers/articles_controller.rb file.
 
-```js
-fetch("http://localhost:9292/test")
-  .then((r) => r.json())
-  .then((data) => console.log(data));
-```
+Implement the necessary logic for fetching articles, deleting articles, and updating articles according to your specific backend requirements.
 
-## Project Tips
+Handle any error handling, validations, or additional functionality on the server-side as per your application's needs.
 
-- This project is intended to focus more on the backend than the frontend, so
-  try and keep the React side of things relatively simple. Focus on working with
-  Active Record and performing CRUD actions. What are some interesting queries you can write? What kinds of questions can you ask of your data?
-- Once you have a project idea, come up with a domain model and decide what
-  relationships exist between the models in your application. Use a tool like
-  [dbdiagram.io][] to help visualize your models.
-- Decide on your API endpoints. What data should they return? What kind of CRUD
-  action should they perform? What data do they need from the client?
-- Use [Postman][postman download] to test your endpoints.
-- Use `binding.pry` to debug your requests on the server. It's very helpful to use a
-  `binding.pry` in your controller within a route to see what `params` are being
-  sent.
-- Use the [Network Tab in the Dev Tools][network tab] in the frontend to debug
-  your requests.
+Note
+Ensure that your frontend application is configured to make requests to the appropriate API endpoints defined in the backend.
 
-## Resources
+Feel free to modify the code in the backend to suit your specific requirements or add additional features to enhance the functionality of the app.
 
-- [create-react-app][]
-- [dbdiagram.io][]
-- [Postman][postman download]
-
-[create-react-app]: https://create-react-app.dev/docs/getting-started
-[create repo]: https://docs.github.com/en/get-started/quickstart/create-a-repo
-[dbdiagram.io]: https://dbdiagram.io/
-[postman download]: https://www.postman.com/downloads/
-[network tab]: https://developer.chrome.com/docs/devtools/network/
+Resources
+Sinatra Documentation
+Active Record Documentation
